@@ -654,47 +654,43 @@ unset($_SESSION['product_id_needs_varian']);
                         $result = $conn->query($sql);
 
                         while ($row = $result->fetch_assoc()): ?>
-                            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                                <div class="card product-card h-100">
-                                    <!-- Gambar produk -->
+                            <div class="col-6 col-md-4 col-lg-3 mb-3">
+                                <div class="card product-card h-100 border-0 shadow-sm">
                                     <a href="detail-product.php?id=<?= $row['id'] ?>">
-                                        <div class="product-image-container">
+                                        <div class="product-image-container ratio ratio-1x1 overflow-hidden">
                                             <img src="../../admin/uploads/<?= htmlspecialchars($row['foto_thumbnail'] ?? 'default.jpg') ?>"
-                                                class="card-img-top" alt="<?= htmlspecialchars($row['nama_produk']) ?>">
+                                                class="w-100 h-100 object-fit-contain p-1"
+                                                alt="<?= htmlspecialchars($row['nama_produk']) ?>">
                                         </div>
                                     </a>
 
-                                    <div class="card-body">
-                                        <!-- Nama produk -->
-                                        <h5 class="card-title">
+                                    <div class="card-body p-2">
+                                        <h6 class="card-title mb-1" style="font-size: 0.9rem;">
                                             <a href="detail-product.php?id=<?= $row['id'] ?>" class="text-decoration-none text-dark">
                                                 <?= htmlspecialchars($row['nama_produk']) ?>
                                             </a>
-                                        </h5>
+                                        </h6>
 
-                                        <!-- Detail produk -->
-                                        <p class="card-text small text-muted">
+                                        <p class="card-text small text-muted mb-1" style="font-size: 0.75rem;">
                                             <?= htmlspecialchars($row['detail']) ?>
                                         </p>
 
-                                        <!-- Harga produk -->
-                                        <div class="mb-2">
+                                        <div class="mb-1">
                                             <?php if ($row['is_diskon'] && $row['harga_diskon'] > 0): ?>
-                                                <span class="original-price">Rp<?= number_format($row['harga'], 0, ',', '.') ?></span>
-                                                <span class="discounted-price">Rp<?= number_format($row['harga_diskon'], 0, ',', '.') ?></span>
+                                                <small class="text-muted text-decoration-line-through">Rp<?= number_format($row['harga'], 0, ',', '.') ?></small><br>
+                                                <span class="text-danger fw-semibold small">Rp<?= number_format($row['harga_diskon'], 0, ',', '.') ?></span>
                                             <?php else: ?>
-                                                <span class="text-success fw-bold">Rp<?= number_format($row['harga'], 0, ',', '.') ?></span>
+                                                <span class="text-success fw-semibold small">Rp<?= number_format($row['harga'], 0, ',', '.') ?></span>
                                             <?php endif; ?>
                                         </div>
 
-                                        <!-- Varian produk -->
                                         <?php
                                         $product_id = $row['id'];
                                         $varianQuery = "SELECT id, varian FROM tb_varian_product WHERE product_id = $product_id AND stok > 0";
                                         $varianResult = $conn->query($varianQuery);
                                         if ($varianResult->num_rows > 0): ?>
                                             <select class="form-select form-select-sm mb-2 varian-select" data-product-id="<?= $product_id ?>">
-                                                <option value="">Pilih varian</option>
+                                                <option value="">Varian</option>
                                                 <?php while ($v = $varianResult->fetch_assoc()): ?>
                                                     <option value="<?= $v['id'] ?>"><?= htmlspecialchars($v['varian']) ?></option>
                                                 <?php endwhile; ?>
@@ -702,8 +698,7 @@ unset($_SESSION['product_id_needs_varian']);
                                         <?php endif; ?>
                                     </div>
 
-                                    <div class="card-footer bg-white border-top-0">
-                                        <!-- Tombol keranjang -->
+                                    <div class="card-footer bg-white border-top-0 p-0">
                                         <button type="button" class="btn btn-sm btn-outline-primary w-100 add-to-cart-btn"
                                             data-product-id="<?= $product_id ?>"
                                             <?= $varianResult->num_rows > 0 ? 'data-has-varian="true"' : 'data-has-varian="false"' ?>>
@@ -712,6 +707,7 @@ unset($_SESSION['product_id_needs_varian']);
                                     </div>
                                 </div>
                             </div>
+
                         <?php endwhile; ?>
                     </div>
                 </div>
@@ -733,13 +729,13 @@ unset($_SESSION['product_id_needs_varian']);
                         <h2><?= htmlspecialchars($etalase['etalase_toko']) ?></h2>
                         <div class="row">
                             <?php while ($product = $productsResult->fetch_assoc()): ?>
-                                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                                    <div class="card product-card h-100">
+                                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                                    <div class="card product-card h-100 border-0 shadow-sm">
                                         <!-- Gambar produk -->
                                         <a href="detail-product.php?id=<?= $product['id'] ?>">
                                             <div class="product-image-container">
                                                 <img src="../../admin/uploads/<?= htmlspecialchars($product['foto_thumbnail'] ?? 'default.jpg') ?>"
-                                                    class="card-img-top" alt="<?= htmlspecialchars($product['nama_produk']) ?>">
+                                                    class="card-img-top w-100 h-100 object-fit-contain p-1" alt="<?= htmlspecialchars($product['nama_produk']) ?>">
                                             </div>
                                         </a>
 
@@ -781,7 +777,7 @@ unset($_SESSION['product_id_needs_varian']);
                                             <?php endif; ?>
                                         </div>
 
-                                        <div class="card-footer bg-white border-top-0">
+                                        <div class="card-footer bg-white border-top-0 p-0">
                                             <!-- Tombol keranjang -->
                                             <button type="button" class="btn btn-sm btn-outline-primary w-100 add-to-cart-btn"
                                                 data-product-id="<?= $product_id ?>"
@@ -854,7 +850,7 @@ unset($_SESSION['product_id_needs_varian']);
                         const variantSelect = this.closest('.card').querySelector('.varian-select');
                         const variantId = variantSelect.value;
 
-                        
+
 
                         // Tambahkan ke keranjang dengan varian
                         addToCart(productId, variantId);

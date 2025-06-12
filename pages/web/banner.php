@@ -60,7 +60,7 @@
 </head>
 
 <body>
-    <section class="container">
+    <section class="container mt-2">
         <div class="slider">
             <div class="slides" id="slides">
                 <div class="slide">
